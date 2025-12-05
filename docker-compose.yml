@@ -1,0 +1,19 @@
+services:
+  app:
+    image: php:8.2-fpm
+    container_name: laravel_app
+    working_dir: /var/www/laravel
+    volumes:
+      - ./backend/laravel:/var/www/laravel
+    ports:
+      - "8000:8000"
+    command: bash -c "php artisan serve --host=0.0.0.0 --port=8000"
+    depends_on:
+      - composer
+
+  composer:
+    image: composer:latest
+    container_name: composer_service
+    working_dir: /var/www/laravel
+    volumes:
+      - ./backend/laravel:/var/www/laravel
