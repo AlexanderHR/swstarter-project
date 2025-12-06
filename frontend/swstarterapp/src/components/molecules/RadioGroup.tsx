@@ -6,6 +6,7 @@ interface RadioGroupProps {
   options: { label: string; value: string }[];
   value: string;
   onChange: (value: string) => void;
+  legend?: string;
 }
 
 export const RadioGroup: React.FC<RadioGroupProps> = ({
@@ -13,9 +14,20 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   options,
   value,
   onChange,
+  legend,
 }) => {
   return (
-    <div className="flex items-center gap-8">
+    <fieldset className="flex items-center gap-8">
+      <legend
+        className={
+          legend
+            ? "text-sm font-semibold text-[#383838] font-montserrat mb-5"
+            : "sr-only"
+        }
+      >
+        {legend || "Choose an option"}
+      </legend>
+
       {options.map((option) => (
         <RadioButton
           key={option.value}
@@ -26,6 +38,6 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
           onChange={() => onChange(option.value)}
         />
       ))}
-    </div>
+    </fieldset>
   );
 };

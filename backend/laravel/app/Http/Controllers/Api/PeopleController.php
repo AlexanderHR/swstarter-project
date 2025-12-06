@@ -20,6 +20,12 @@ class PeopleController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
+            if ($request->has('name')) {
+                $name = $request->query('name');
+                $people = $this->starWarsService->searchPeople($name);
+                return response()->json($people->toArray());
+            }
+
             $page = $request->query('page', 1);
             $limit = $request->query('limit', 10);
 

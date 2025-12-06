@@ -1,3 +1,4 @@
+import { cn } from "@/util";
 import React from "react";
 
 interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -16,7 +17,10 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
       <div className="relative flex items-center justify-center w-4 h-4">
         <input
           type="radio"
-          className="peer appearance-none w-4 h-4 rounded-full border border-pinkish-grey checked:border-emerald checked:bg-emerald transition-colors"
+          className={cn(
+            "peer appearance-none w-4 h-4 rounded-full border border-pinkish-grey checked:border-emerald checked:bg-emerald transition-colors",
+            className
+          )}
           checked={checked}
           {...props}
         />

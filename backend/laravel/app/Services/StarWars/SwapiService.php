@@ -5,6 +5,7 @@ namespace App\Services\StarWars;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\DTOs\Swapi\PeopleListDTO;
+use App\DTOs\Swapi\PeopleSearchDTO;
 use App\DTOs\Swapi\PersonDTO;
 use Exception;
 
@@ -28,6 +29,25 @@ class SwapiService implements StarWarsServiceInterface
             return PeopleListDTO::fromApi($response->json());
         } catch (Exception $e) {
             Log::error('Error in SwapiService::getPeople', ['message' => $e->getMessage()]);
+            throw $e;
+        }
+    }
+
+    public function searchPeople(string $name): PeopleSearchDTO
+    {
+        try {
+            $response = Http::get("{$this->baseUrl}/people", [
+                'name' => $name,
+            ]);
+
+            if ($response->failed()) {
+                Log::error('Failed to search people from Swapi', ['status' => $response->status(), 'body' => $response->body()]);
+                throw new Exception('Failed to search people data.');
+            }
+
+            return PeopleSearchDTO::fromApi($response->json());
+        } catch (Exception $e) {
+            Log::error('Error in SwapiService::searchPeople', ['message' => $e->getMessage()]);
             throw $e;
         }
     }

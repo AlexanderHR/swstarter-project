@@ -4,30 +4,55 @@ import { Card } from "../atoms/Card";
 import { Input } from "../atoms/Input";
 import { Button } from "../atoms/Button";
 import { RadioGroup } from "./RadioGroup";
+import { searchTypes } from "../constants";
 
-export const SearchForm: React.FC = () => {
-  const [searchType, setSearchType] = React.useState("people");
-
+type Props = {
+  searchType: string;
+  setSearchType: (value: string) => void;
+  onChangeQuery: (value: string) => void;
+  query: string;
+  onClickSearch: () => void;
+  isSearching?: boolean;
+  isDisabled?: boolean;
+};
+export const SearchForm: React.FC<Props> = ({
+  searchType,
+  setSearchType,
+  onChangeQuery,
+  query,
+  onClickSearch,
+  isSearching,
+  isDisabled,
+}) => {
+  const inputPlaceholder =
+    searchType === "people"
+      ? "e.g. Chewbacca, Yoda, Boba Fett"
+      : "e.g. Yoda's Adventure, The Empire Strikes Back";
   return (
-    <Card className="w-[410px] h-[230px] p-[30px] flex flex-col gap-[20px]">
-      <div className="flex flex-col gap-[20px]">
-        <h2 className="text-sm font-semibold text-[#383838] font-montserrat">
-          What are you searching for?
-        </h2>
+    <Card className="w-[410px] h-[230px] p-card-padding flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <RadioGroup
-          name="searchType"
-          options={[
-            { label: "People", value: "people" },
-            { label: "Movies", value: "movies" },
-          ]}
+          legend={"What are you searching for?"}
+          name={"searchType"}
+          options={searchTypes}
           value={searchType}
           onChange={setSearchType}
         />
       </div>
 
-      <div className="flex flex-col gap-[20px]">
-        <Input placeholder="e.g. Chewbacca, Yoda, Boba Fett" />
-        <Button variant="disabled">SEARCH</Button>
+      <div className="flex flex-col gap-5">
+        <Input
+          aria-label="Search Input"
+          placeholder={inputPlaceholder}
+          onChange={(e) => onChangeQuery(e.target.value)}
+          value={query}
+        />
+        <Button
+          variant={isDisabled ? "disabled" : "default"}
+          onClick={onClickSearch}
+        >
+          {isSearching ? "SEARCHING..." : "SEARCH"}
+        </Button>
       </div>
     </Card>
   );

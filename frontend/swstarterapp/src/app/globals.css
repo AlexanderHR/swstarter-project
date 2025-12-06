@@ -14,6 +14,7 @@
   --color-pinkish-grey: rgb(196, 196, 196);
   --color-emerald: rgb(0, 148, 255);
   --color-warm-grey-75: rgba(132, 132, 132, 0.75);
+  --color-dark-grey: rgb(56, 56, 56);
 
   /* Spacing & Layout Tokens */
   --spacing-card-size: 582px;

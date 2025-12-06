@@ -1,5 +1,5 @@
-import { DashboardTemplate } from "@/components/templates/DashboardTemplate";
+import { HomePage } from "@/feature/home/HomePage";
 
 export default function Home() {
-  return <DashboardTemplate />;
+  return <HomePage />;
 }
