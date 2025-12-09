@@ -20,9 +20,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
     <fieldset className="flex items-center gap-8">
       <legend
         className={
-          legend
-            ? "text-sm font-semibold text-[#383838] font-montserrat mb-5"
-            : "sr-only"
+          legend ? "text-sm font-semibold font-montserrat mb-5" : "sr-only"
         }
       >
         {legend || "Choose an option"}

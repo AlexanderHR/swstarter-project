@@ -15,12 +15,19 @@ class PersonDTO
         public string $birthYear,
         public string $gender,
         public string $homeworld,
-        public string $url
+        public string $url,
+        public array $filmsIds = [],
+        public array $films = []
     ) {}
 
     public static function fromApi(array $data): self
     {
         $properties = $data['result']['properties'];
+
+        $filmsIds = array_map(function ($url) {
+            return basename(rtrim($url, '/'));
+        }, $properties['films'] ?? []);
+
         return new self(
             uid: $data['result']['uid'],
             name: $properties['name'],
@@ -32,7 +39,8 @@ class PersonDTO
             birthYear: $properties['birth_year'],
             gender: $properties['gender'],
             homeworld: $properties['homeworld'],
-            url: $properties['url']
+            url: $properties['url'],
+            filmsIds: $filmsIds
         );
     }
 
@@ -50,6 +58,8 @@ class PersonDTO
             'gender' => $this->gender,
             'homeworld' => $this->homeworld,
             'url' => $this->url,
+            'films_ids' => $this->filmsIds,
+            'films' => $this->films,
         ];
     }
 }
