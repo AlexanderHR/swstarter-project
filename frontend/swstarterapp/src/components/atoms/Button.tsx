@@ -2,7 +2,7 @@ import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "w-full h-button-height rounded-button font-bold text-sm transition-colors duration-200 flex items-center justify-center uppercase font-montserrat",
+  "w-full h-button-height rounded-button font-bold text-sm transition-colors duration-200 flex items-center justify-center uppercase font-montserrat cursor-pointer",
   {
     variants: {
       variant: {
@@ -24,23 +24,23 @@ export interface ButtonProps
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  variant,
-  children,
-  className = "",
-  ...props
-}) => {
-  const isDisabled = variant === "disabled";
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant, children, className = "", ...props }, ref) => {
+    const isDisabled = variant === "disabled";
 
-  return (
-    <button
-      className={buttonVariants({ variant, className })}
-      disabled={isDisabled}
-      aria-disabled={isDisabled}
-      role="button"
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+    return (
+      <button
+        className={buttonVariants({ variant, className })}
+        disabled={isDisabled}
+        aria-disabled={isDisabled}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+Button.displayName = "Button";
+
+export { Button };

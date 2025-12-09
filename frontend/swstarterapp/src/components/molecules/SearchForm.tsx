@@ -24,36 +24,45 @@ export const SearchForm: React.FC<Props> = ({
   isSearching,
   isDisabled,
 }) => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const inputPlaceholder =
     searchType === "people"
       ? "e.g. Chewbacca, Yoda, Boba Fett"
       : "e.g. Yoda's Adventure, The Empire Strikes Back";
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isDisabled && !isSearching) {
+      onClickSearch();
+    }
+  };
+  const radioGroupChange = (value: string) => {
+    setSearchType(value);
+    inputRef.current?.focus();
+  };
   return (
-    <Card className="w-[410px] h-[230px] p-card-padding flex flex-col gap-5">
-      <div className="flex flex-col gap-5">
+    <Card className="min-w-96 box-border md:box-content md:w-auto w-full p-card-padding">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 h-full">
         <RadioGroup
           legend={"What are you searching for?"}
           name={"searchType"}
           options={searchTypes}
           value={searchType}
-          onChange={setSearchType}
+          onChange={radioGroupChange}
         />
-      </div>
 
-      <div className="flex flex-col gap-5">
         <Input
+          ref={inputRef}
           aria-label="Search Input"
           placeholder={inputPlaceholder}
           onChange={(e) => onChangeQuery(e.target.value)}
           value={query}
         />
-        <Button
-          variant={isDisabled ? "disabled" : "default"}
-          onClick={onClickSearch}
-        >
+        <Button variant={isDisabled ? "disabled" : "default"} type="submit">
           {isSearching ? "SEARCHING..." : "SEARCH"}
         </Button>
-      </div>
+      </form>
     </Card>
   );
 };

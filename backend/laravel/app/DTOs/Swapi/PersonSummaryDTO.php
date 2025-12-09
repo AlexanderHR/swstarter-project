@@ -6,14 +6,14 @@ class PersonSummaryDTO
 {
     public function __construct(
         public string $uid,
-        public string $name
+        public string $description
     ) {}
 
     public static function fromSearchItem(array $item): self
     {
         return new self(
             uid: $item['uid'],
-            name: $item['properties']['name']
+            description: $item['properties']['name']
         );
     }
 
@@ -21,7 +21,7 @@ class PersonSummaryDTO
     {
         return [
             'uid' => $this->uid,
-            'name' => $this->name,
+            'description' => $this->description,
         ];
     }
 }

@@ -3,6 +3,7 @@
 import { SearchForm } from "@/components/molecules/SearchForm";
 import { ResultsSection } from "@/components/organisms/ResultsSection";
 import { useSearch } from "../hooks/useSearch";
+import { SEARCH_TYPE_PEOPLE } from "@/types";
 
 export const SearchSystem = () => {
   const {
@@ -27,7 +28,11 @@ export const SearchSystem = () => {
         isSearching={isSearching}
         isDisabled={isDisabled}
       />
-      <ResultsSection isSearching={isSearching} results={results} />
+      <ResultsSection
+        type={searchType as SEARCH_TYPE_PEOPLE}
+        isSearching={isSearching}
+        results={results}
+      />
     </>
   );
 };

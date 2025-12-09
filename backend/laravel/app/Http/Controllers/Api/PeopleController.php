@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\StarWars\StarWarsServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Exception;
 
 class PeopleController extends Controller
@@ -19,20 +20,27 @@ class PeopleController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ], 422);
+        }
+
         try {
-            if ($request->has('name')) {
-                $name = $request->query('name');
-                $people = $this->starWarsService->searchPeople($name);
-                return response()->json($people->toArray());
-            }
-
-            $page = $request->query('page', 1);
-            $limit = $request->query('limit', 10);
-
-            $people = $this->starWarsService->getPeople((int)$page, (int)$limit);
-
+            $name = $request->query('name');
+            $people = $this->starWarsService->searchPeople($name);
+            
             return response()->json($people->toArray());
         } catch (Exception $e) {
+            // Pass error info to middleware
+            $request->attributes->set('error_message', $e->getMessage());
+            $request->attributes->set('exception_type', get_class($e));
+
             return response()->json(['error' => 'Unable to fetch people list.'], 500);
         }
     }
@@ -41,7 +49,6 @@ class PeopleController extends Controller
     {
         try {
             $person = $this->starWarsService->getPerson($id);
-
             return response()->json($person->toArray());
         } catch (Exception $e) {
             return response()->json(['error' => 'Unable to fetch person details.'], 500);
