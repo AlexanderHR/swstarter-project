@@ -45,6 +45,29 @@ services:
       - redis
     command: php artisan queue:work --tries=3 --timeout=90
 
+  scheduler:
+    build:
+      context: ./backend/laravel
+    container_name: scheduler
+    working_dir: /var/www/laravel
+    volumes:
+      - ./backend/laravel:/var/www/laravel
+    environment:
+      - REDIS_HOST=redis
+      - CACHE_STORE=redis
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=swapi
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - QUEUE_CONNECTION=database
+    depends_on:
+      - backend
+      - db
+      - redis
+    command: php artisan schedule:work
+
   frontend:
     build:
       context: ./frontend/swstarterapp

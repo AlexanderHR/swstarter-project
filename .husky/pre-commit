@@ -1,0 +1,13 @@
+cd frontend/swstarterapp
+
+# Run lint-staged
+if ! npx lint-staged; then
+  echo "Lint-staged failed"
+  exit 1
+fi
+
+# Run Type Checking
+if ! npm run tsc; then
+  echo "Type checking failed"
+  exit 1
+fi

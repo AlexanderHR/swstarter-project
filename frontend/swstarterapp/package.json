@@ -10,8 +10,7 @@
     "format": "prettier --write .",
     "tsc": "tsc --noEmit",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "prepare": "husky"
+    "test:watch": "jest --watch"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
