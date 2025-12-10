@@ -13,8 +13,14 @@ class MetricsController extends Controller
 
         if (!$metrics) {
             return response()->json([
-                'message' => 'Metrics not yet calculated',
-                'data' => null
+                'data' => [
+                    'average_response_time_ms' => 0,
+                    'response_time_percentiles' => [],
+                    'most_popular_hour' => null,
+                    'most_popular_hour_count' => 0,
+                    'status_codes_by_path' => [],
+                    'last_updated' => now()->toIso8601String(),
+                ]
             ]);
         }
 

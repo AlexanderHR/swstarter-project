@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { swService } from "@/services/swService";
 import { useQueryState } from "nuqs";
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { SEARCH_TYPE_PEOPLE } from "@/types";
 
 export const useSearch = () => {
@@ -22,6 +22,13 @@ export const useSearch = () => {
     enabled: !!executedQuery,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
+
+  useEffect(() => {
+    return () => {
+      setExecutedQuery("");
+      setQuery("");
+    };
+  }, []);
 
   return {
     searchType,

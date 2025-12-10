@@ -6,7 +6,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-1 flex justify-center gap-[30px] pt-[30px] px-4">
+      <main className="flex-1 flex justify-center gap-card-padding pt-card-padding px-4">
         {children}
       </main>
     </div>

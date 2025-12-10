@@ -22,3 +22,6 @@ Follow the steps below to start the application using Docker:
 
 4. **Access System Metrics:**
    You can analyze system metrics at [http://localhost:3000/metrics](http://localhost:3000/metrics)
+
+5. **Access Storybook:**
+   You can view the component library at [http://localhost:6006/](http://localhost:6006/)
