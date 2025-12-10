@@ -17,7 +17,7 @@ export const PersonDetailsCard: React.FC<Props> = ({ id }) => {
   const person = data || ({} as Person);
 
   return (
-    <Card className="w-[804px] min-h-[417px] p-card-padding relative flex flex-col">
+    <Card className="md:w-3xl w-full min-h-96 p-card-padding relative flex flex-col">
       {isFetching ? (
         <Skeleton className="h-7 w-48 mb-8" />
       ) : (
@@ -26,7 +26,7 @@ export const PersonDetailsCard: React.FC<Props> = ({ id }) => {
         </h1>
       )}
 
-      <div className="flex flex-1 gap-20">
+      <div className="flex flex-col md:flex-row gap-20">
         {/* Details Column */}
         <div className="flex-1">
           <h2 className="font-montserrat font-bold text-base text-black mb-2">
